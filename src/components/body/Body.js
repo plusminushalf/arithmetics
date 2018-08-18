@@ -5,6 +5,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Table from 'components/table/';
 import Timer from 'components/timer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import StarIcon from '@material-ui/icons/Star';
 
 export default class Body extends Component {
   constructor(props) {
@@ -15,9 +20,26 @@ export default class Body extends Component {
     };
   }
 
+  renderRules = () => {
+    return (
+      <div style={{margin: "auto", width: "50%", marginTop: "50px", textAlign: "center"}}>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <StarIcon />
+            </ListItemIcon>
+            <ListItemText>Fill out all the cells with additions of specific column and row, once done press submit to check the answers
+            </ListItemText>
+          </ListItem>
+        </List>
+      </div>
+    );
+  }
+
   render() {
     return (
-      <div style={{display: "flex"}}>
+      <div style={{display: "flex", flexDirection: "column"}}>
+        {this.renderRules()}
         {!this.state.started &&
           <Button
             onClick={() => this.setState({started: true})}
