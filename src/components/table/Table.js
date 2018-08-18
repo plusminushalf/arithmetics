@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Input from '@material-ui/core/Input';
 import './table.css';
+import Typography from '@material-ui/core/Typography';
 
 export default class Body extends Component {
 
@@ -24,7 +25,65 @@ export default class Body extends Component {
     this.setState({
       inputs
     })
-    console.log(value, row, col, this.state.inputs)
+  }
+
+  takeInput() {
+    return this.rows.map((row, rowindex) => {
+      return (
+        <TableRow key={rowindex}>
+          <TableCell scope="row">
+            {row}
+          </TableCell>
+          {Array.apply(null, Array(10)).map((ele, colindex) => {
+            return (
+              <TableCell key={colindex}>
+                <Input
+                  type="number"
+                  inputProps={{
+                    min: "0",
+                    max: "999"
+                  }}
+                  onChange={(event) => this.setValue(event.target.value, rowindex, colindex)}
+                  style={{width: "30px"}}
+                />
+              </TableCell>
+            );
+          })}
+        </TableRow>
+      );
+    });
+  }
+
+  evaluate() {
+    return this.rows.map((row, rowindex) => {
+      return (
+        <TableRow key={rowindex}>
+          <TableCell scope="row">
+            {row}
+          </TableCell>
+          {Array.apply(null, Array(10)).map((ele, colindex) => {
+            return (
+              <TableCell key={colindex}>
+                {this.state.inputs[rowindex][colindex] === this.rows[rowindex] + this.cols[colindex] &&
+                  <Typography 
+                    variant="body1"
+                    color="primary"
+                  >{this.state.inputs[rowindex][colindex]}
+                  </Typography>
+                }
+                {this.state.inputs[rowindex][colindex] !== this.rows[rowindex] + this.cols[colindex] &&
+                  <Typography 
+                  variant="body1"
+                  color="error"
+                >{this.state.inputs[rowindex][colindex]}
+                </Typography>
+                }
+              </TableCell>
+            );
+          })}
+        </TableRow>
+      );
+    });
   }
 
   render() {
@@ -41,30 +100,8 @@ export default class Body extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.rows.map((row, rowindex) => {
-            return (
-              <TableRow key={rowindex}>
-                <TableCell scope="row">
-                  {row}
-                </TableCell>
-                {Array.apply(null, Array(10)).map((ele, colindex) => {
-                  return (
-                    <TableCell key={colindex}>
-                      <Input
-                        type="number"
-                        inputProps={{
-                          min: "0",
-                          max: "999"
-                        }}
-                        onChange={(event) => this.setValue(event.target.value, rowindex, colindex)}
-                        style={{width: "30px"}}
-                      />
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
+          {!this.props.evalute && this.takeInput()}
+          {this.props.evalute && this.evaluate()}
         </TableBody>
       </Table>
     );

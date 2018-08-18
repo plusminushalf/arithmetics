@@ -10,7 +10,8 @@ export default class Body extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      started: false
+      started: false,
+      evalute: false
     };
   }
 
@@ -29,10 +30,10 @@ export default class Body extends Component {
         {this.state.started && 
           <Card style={{margin: "50px", flexGrow: "1"}}>
             <CardContent>
-              <Timer />
-              <Table />
+              <Table evalute={this.state.evalute} />
             </CardContent>
             <CardActions>
+              <Timer stop={this.state.evalute} style={{paddingLeft: "24px"}}/>
               <Button 
                 onClick={() => window.location.reload()}
                 style={{marginLeft: "auto"}}
@@ -41,7 +42,7 @@ export default class Body extends Component {
                 size="small">
                 Reload
               </Button>
-              <Button color="primary" variant="contained" size="small">Submit</Button>
+              <Button onClick={() => this.setState({evalute: true})} color="primary" variant="contained" size="small">Submit</Button>
             </CardActions>
           </Card>
         }
