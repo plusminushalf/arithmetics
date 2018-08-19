@@ -12,23 +12,45 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Timer from 'components/timer';
 import Button from '@material-ui/core/Button';
+import { setItem, getItem, removeItem } from 'utils/localstorage';
 
 export default class Body extends Component {
 
   constructor(props) {
     super(props);
-    this.cols = Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*90) + 10);
-    this.rows = Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*90) + 10);
+    const storage = this.loadFromStorage();
+    this.cols = storage.cols;
+    this.rows = storage.rows;
     this.score = 0;
+    this.loadedFromStorage = storage.loadedFromStorage;
     this.state = {
-      inputs: Array.apply(null, Array(10)).map(() => Array.apply(null, Array(10)).map(() => 0)),
-      evalute: false
+      inputs: storage.inputs,
+      evaluate: false
     };
+  }
+
+  loadFromStorage = () => {
+    const storage = {
+      cols: (this.props.resume
+        && getItem('cols'))
+        || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*90) + 10),
+      rows: (this.props.resume
+        && getItem('rows'))
+        || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*90) + 10),
+      inputs: (this.props.resume
+        && getItem('inputs'))
+        || Array.apply(null, Array(10)).map(() => Array.apply(null, Array(10)).map(() => 0)),
+      loadedFromStorage: (this.props.resume && getItem('cols')) && true
+    };
+    setItem('cols', storage.cols);
+    setItem('rows', storage.rows);
+    return storage;
   }
 
   setValue = (value, row, col) => {
     const {inputs} = this.state;
     inputs[row][col] = parseInt(value, 10);
+    setItem('inputs', inputs);
     this.setState({
       inputs
     })
@@ -50,6 +72,7 @@ export default class Body extends Component {
                     min: "0",
                     max: "999"
                   }}
+                  value={this.state.inputs[rowindex][colindex] || undefined}
                   onChange={(event) => this.setValue(event.target.value, rowindex, colindex)}
                   style={{width: "30px"}}
                 />
@@ -109,13 +132,13 @@ export default class Body extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {!this.state.evalute && this.takeInput()}
-              {this.state.evalute && this.evaluate()}
+              {!this.state.evaluate && this.takeInput()}
+              {this.state.evaluate && this.evaluate()}
             </TableBody>
           </Table>
             <CardActions>
-              <Timer stop={this.state.evalute} style={{paddingLeft: "24px"}}/>
-              {this.state.evalute &&
+              <Timer loadFromStorage={this.loadedFromStorage} stop={this.state.evaluate} style={{paddingLeft: "24px"}}/>
+              {this.state.evaluate &&
                 <div style={{marginLeft: "auto"}}>
                   <Typography
                     variant="title"
@@ -126,7 +149,12 @@ export default class Body extends Component {
                 </div>
               }
               <Button
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                  removeItem('inputs');
+                  removeItem('cols');
+                  removeItem('rows');
+                  window.location.reload()
+                }}
                 style={{marginLeft: "auto"}}
                 color="primary"
                 variant="outlined"
@@ -136,7 +164,10 @@ export default class Body extends Component {
               <Button
                   onClick={() => {
                     this.score = 0;
-                    this.setState({evalute: true})
+                    removeItem('inputs');
+                    removeItem('cols');
+                    removeItem('rows');
+                    this.setState({evaluate: true})
                   }}
                   color="primary"
                   variant="contained"

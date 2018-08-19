@@ -6,12 +6,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import StarIcon from '@material-ui/icons/Star';
+import { getItem } from 'utils/localstorage';
 
 export default class Body extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      started: false
+        started: false,
+        resume: false
     };
   }
 
@@ -37,6 +39,15 @@ export default class Body extends Component {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
         {this.renderRules()}
+        {getItem('cols') && !this.state.started &&
+          <Button
+            onClick={() => this.setState({started: true, resume: true})}
+            style={{margin: "auto", width: "50%", marginTop: "50px"}}
+            color="primary"
+            variant="outlined"
+            size="small">
+            Resume
+          </Button>}
         {!this.state.started &&
           <Button
             onClick={() => this.setState({started: true})}
@@ -47,7 +58,7 @@ export default class Body extends Component {
             Start
           </Button>}
         {this.state.started &&
-          <Table />
+          <Table resume={this.state.resume} />
         }
       </div>
     );

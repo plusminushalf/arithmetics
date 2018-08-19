@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
+import { setItem, getItem } from 'utils/localstorage';
 
 export default class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      min: 0,
-      sec: 0
+      min: (this.props.loadFromStorage && getItem('min')) || 0,
+      sec: (this.props.loadFromStorage && getItem('sec'))|| 0
     };
     this.timer = setInterval(this.tick, 1000);
   }
@@ -24,6 +25,8 @@ export default class Timer extends Component {
       sec = 0;
       min++;
     }
+    setItem('min', min);
+    setItem('sec', sec);
     this.setState({
       sec,
       min
