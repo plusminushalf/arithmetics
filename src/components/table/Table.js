@@ -133,7 +133,17 @@ export default class Body extends Component {
                 size="small">
                 Reload
               </Button>
-              <Button onClick={() => this.setState({evalute: true})} color="primary" variant="contained" size="small">Submit</Button>
+              <Button
+                  onClick={() => {
+                    this.score = 0;
+                    this.setState({evalute: true})
+                  }}
+                  color="primary"
+                  variant="contained"
+                  size="small"
+              >
+                  Submit
+              </Button>
             </CardActions>
           </CardContent>
         </Card>

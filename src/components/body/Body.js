@@ -23,7 +23,9 @@ export default class Body extends Component {
             <ListItemIcon>
               <StarIcon />
             </ListItemIcon>
-            <ListItemText>Fill out all the cells with additions of specific column and row, once done press submit to check the answers
+            <ListItemText>
+                Fill out all the cells with additions of specific column and row,
+                once done press submit to check the answers
             </ListItemText>
           </ListItem>
         </List>
