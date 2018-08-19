@@ -72,14 +72,14 @@ export default class Body extends Component {
             return (
               <TableCell key={colindex}>
                 {this.state.inputs[rowindex][colindex] === this.rows[rowindex] + this.cols[colindex] && ++this.score &&
-                  <Typography 
+                  <Typography
                     variant="body1"
                     color="primary"
                   >{this.state.inputs[rowindex][colindex]}
                   </Typography>
                 }
                 {this.state.inputs[rowindex][colindex] !== this.rows[rowindex] + this.cols[colindex] &&
-                  <Typography 
+                  <Typography
                   variant="body1"
                   color="error"
                 >{this.state.inputs[rowindex][colindex]}
@@ -117,7 +117,7 @@ export default class Body extends Component {
               <Timer stop={this.state.evalute} style={{paddingLeft: "24px"}}/>
               {this.state.evalute &&
                 <div style={{marginLeft: "auto"}}>
-                  <Typography 
+                  <Typography
                     variant="title"
                     color="inherit"
                   >
@@ -125,7 +125,7 @@ export default class Body extends Component {
                   </Typography>
                 </div>
               }
-              <Button 
+              <Button
                 onClick={() => window.location.reload()}
                 style={{marginLeft: "auto"}}
                 color="primary"

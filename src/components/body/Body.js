@@ -44,7 +44,7 @@ export default class Body extends Component {
             size="small">
             Start
           </Button>}
-        {this.state.started && 
+        {this.state.started &&
           <Table />
         }
       </div>

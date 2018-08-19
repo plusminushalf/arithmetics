@@ -33,13 +33,13 @@ export default class Timer extends Component {
   render() {
     return (
       <div style={this.props.style}>
-        <Typography 
+        <Typography
           variant="body1"
           color="inherit"
         >
-        Time lapsed: 
+        Time lapsed:
         </Typography>
-        <Typography 
+        <Typography
           variant="title"
           color="inherit"
         >

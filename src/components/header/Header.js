@@ -18,7 +18,7 @@ export default class Header extends Component {
     return (
       <AppBar position="static">
         <Toolbar>
-          <Typography 
+          <Typography
             style={{flexGrow: 1}}
             variant="title"
             color="inherit"
