@@ -93,26 +93,32 @@ export default class Body extends Component {
     return this.rows.map((row, rowindex) => {
       return (
         <TableRow key={rowindex}>
-          <TableCell scope="row">
-            {row}
-          </TableCell>
           {Array.apply(null, Array(10)).map((ele, colindex) => {
             return (
               <TableCell key={colindex}>
-                {this.state.inputs[rowindex][colindex] === this.rows[rowindex] + this.cols[colindex] && ++this.score &&
+                <div style={{display: "flex"}}>
                   <Typography
                     variant="body1"
-                    color="primary"
-                  >{this.state.inputs[rowindex][colindex]}
+                    color="textSecondary"
+                    style={{display: "flex", alignItems: "center"}}
+                  >
+                    {this.rows[rowindex]} + {this.cols[colindex]} =
                   </Typography>
-                }
-                {this.state.inputs[rowindex][colindex] !== this.rows[rowindex] + this.cols[colindex] &&
-                  <Typography
-                  variant="body1"
-                  color="error"
-                >{this.state.inputs[rowindex][colindex]}
-                </Typography>
-                }
+                  {this.state.inputs[rowindex][colindex] === this.rows[rowindex] + this.cols[colindex] && ++this.score &&
+                    <Typography
+                      variant="body1"
+                      color="primary"
+                    >{this.state.inputs[rowindex][colindex]}
+                    </Typography>
+                  }
+                  {this.state.inputs[rowindex][colindex] !== this.rows[rowindex] + this.cols[colindex] &&
+                    <Typography
+                      variant="body1"
+                      color="error"
+                    >{this.state.inputs[rowindex][colindex]}
+                    </Typography>
+                  }
+                </div>
               </TableCell>
             );
           })}
