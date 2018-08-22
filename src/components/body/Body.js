@@ -19,7 +19,7 @@ export default class Body extends Component {
 
   renderRules = () => {
     return (
-      <div style={{margin: "auto", width: "50%", marginTop: "50px", textAlign: "center"}}>
+      <div style={{margin: "auto", marginTop: "50px", textAlign: "center"}}>
         <List>
           <ListItem>
             <ListItemIcon>

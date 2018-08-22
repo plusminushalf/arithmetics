@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Input from '@material-ui/core/Input';
 import './table.css';
@@ -60,22 +59,28 @@ export default class Body extends Component {
     return this.rows.map((row, rowindex) => {
       return (
         <TableRow key={rowindex}>
-          <TableCell scope="row">
-            {row}
-          </TableCell>
           {Array.apply(null, Array(10)).map((ele, colindex) => {
             return (
-              <TableCell key={colindex}>
-                <Input
-                  type="number"
-                  inputProps={{
-                    min: "0",
-                    max: "999"
-                  }}
-                  value={this.state.inputs[rowindex][colindex] || undefined}
-                  onChange={(event) => this.setValue(event.target.value, rowindex, colindex)}
-                  style={{width: "30px"}}
-                />
+              <TableCell key={colindex} style={{padding: "5px"}}>
+                <div style={{display: "flex"}}>
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    style={{display: "flex", alignItems: "center"}}
+                  >
+                    {this.rows[rowindex]} + {this.cols[colindex]} =
+                  </Typography>
+                  <Input
+                    type="number"
+                    inputProps={{
+                      min: "0",
+                      max: "999"
+                    }}
+                    value={this.state.inputs[rowindex][colindex] || undefined}
+                    onChange={(event) => this.setValue(event.target.value, rowindex, colindex)}
+                    style={{width: "30px", marginLeft: "5px"}}
+                  />
+                </div>
               </TableCell>
             );
           })}
@@ -121,16 +126,16 @@ export default class Body extends Component {
       <Card style={{margin: "50px", flexGrow: "1"}}>
         <CardContent>
           <Table >
-            <TableHead>
+            {/* <TableHead>
               <TableRow>
                 <TableCell key={0}></TableCell>
                 {this.cols.map((col, index) => {
                   return (
-                    <TableCell key={index}>{col}</TableCell>
+                    <TableCell key={index}></TableCell>
                   );
                 })}
               </TableRow>
-            </TableHead>
+            </TableHead> */}
             <TableBody>
               {!this.state.evaluate && this.takeInput()}
               {this.state.evaluate && this.evaluate()}
