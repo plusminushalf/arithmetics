@@ -2,7 +2,7 @@
   "name": "additions",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://garvit.in/cat-additions/build/",
+  "homepage": "https://garvit.in/arithmetics/build/",
   "dependencies": {
     "@material-ui/core": "^1.5.0",
     "@material-ui/icons": "^2.0.2",
