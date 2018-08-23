@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import { withRouter } from 'react-router-dom';
+import { ROOT_PATH } from 'utils/config';
 
 function GithubIcon(props) {
   return (
@@ -19,20 +20,18 @@ function Header(props) {
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
-        {props.location.pathname !== '/' &&
-          <IconButton color="inherit" aria-label="Back">
-            <ArrowBack onClick={() => props.history.push('/') } />
+        {props.location.pathname !== ROOT_PATH && props.location.pathname !== `${ROOT_PATH}/` &&
+          <IconButton color="inherit" aria-label="Back" onClick={() => props.history.push(ROOT_PATH) } >
+            <ArrowBack />
           </IconButton>
         }
         <Typography
           style={{flexGrow: 1, cursor: "pointer"}}
           variant="title"
           color="inherit"
-          onClick={() => props.history.push('/')}
+          onClick={() => props.history.push(ROOT_PATH)}
         >
-          {props.location.pathname === '/' && 'Arithmetics'}
-          {props.location.pathname !== '/' &&
-            props.location.pathname.charAt(1).toUpperCase() + props.location.pathname.slice(2)}
+          Arithmetics
         </Typography>
         <IconButton
           onClick={() => window.open("https://github.com/garvitdelhi/cat-additions", "_blank")}

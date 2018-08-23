@@ -7,3 +7,24 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance:textfield;
 }
+
+.table-card {
+  margin: 50px;
+  flex-grow: 1;
+}
+
+.cell {
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .table-card {
+    margin: 10px;
+  }
+  .cell {
+    display: block;
+  }
+  .action {
+    display: block !important;
+  }
+}

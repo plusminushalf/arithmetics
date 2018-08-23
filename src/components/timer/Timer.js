@@ -35,18 +35,12 @@ export default class Timer extends Component {
 
   render() {
     return (
-      <div style={this.props.style}>
+      <div style={{display: "flex"}}>
         <Typography
           variant="body1"
           color="inherit"
         >
-        Time lapsed:
-        </Typography>
-        <Typography
-          variant="title"
-          color="inherit"
-        >
-          {this.state.min} : {this.state.sec}
+        Time lapsed: {this.state.min} : {this.state.sec}
         </Typography>
       </div>
     );

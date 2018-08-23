@@ -1,0 +1,11 @@
+.home {
+  margin: 50px auto auto;
+  width: 50%;
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .home {
+    flex-direction: column;
+  }
+}
