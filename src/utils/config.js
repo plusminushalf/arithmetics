@@ -1,1 +1,1 @@
-export const ROOT_PATH = '/arithmetics/build';
+export const ROOT_PATH = '/';
