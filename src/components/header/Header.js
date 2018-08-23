@@ -30,7 +30,7 @@ function Header(props) {
           color="inherit"
           onClick={() => props.history.push('/')}
         >
-          {props.location.pathname === '/' && 'Airthmetics'}
+          {props.location.pathname === '/' && 'Arithmetics'}
           {props.location.pathname !== '/' &&
             props.location.pathname.charAt(1).toUpperCase() + props.location.pathname.slice(2)}
         </Typography>
