@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Table from 'components/table/';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { getItem } from 'utils/localstorage';
 
 export default class Additions extends Component {
@@ -12,9 +15,24 @@ export default class Additions extends Component {
     };
   }
 
+  renderRules = () => {
+    return (
+      <div style={{margin: "auto", marginTop: "50px", textAlign: "center"}}>
+        <List>
+          <ListItem>
+            <ListItemText>
+              Additions
+            </ListItemText>
+          </ListItem>
+        </List>
+      </div>
+      );
+  }
+
   render() {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
+        {this.renderRules()}
         {getItem('additionscols') && !this.state.started &&
         <Button
           onClick={() => this.setState({started: true, resume: true})}
@@ -43,5 +61,5 @@ export default class Additions extends Component {
         }
       </div>
       );
-}
+  }
 }
