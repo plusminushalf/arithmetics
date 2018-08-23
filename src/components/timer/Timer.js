@@ -6,8 +6,8 @@ export default class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      min: (this.props.loadFromStorage && getItem('min')) || 0,
-      sec: (this.props.loadFromStorage && getItem('sec'))|| 0
+      min: (this.props.loadFromStorage && getItem(this.props.name + 'min')) || 0,
+      sec: (this.props.loadFromStorage && getItem(this.props.name + 'sec'))|| 0
     };
     this.timer = setInterval(this.tick, 1000);
   }
@@ -25,8 +25,8 @@ export default class Timer extends Component {
       sec = 0;
       min++;
     }
-    setItem('min', min);
-    setItem('sec', sec);
+    setItem(this.props.name + 'min', min);
+    setItem(this.props.name + 'sec', sec);
     this.setState({
       sec,
       min

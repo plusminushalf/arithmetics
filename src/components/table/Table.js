@@ -31,25 +31,25 @@ export default class Body extends Component {
   loadFromStorage = () => {
     const storage = {
       cols: (this.props.resume
-        && getItem('cols'))
-        || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*90) + 10),
+        && getItem(this.props.name + 'cols'))
+        || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*100)),
       rows: (this.props.resume
-        && getItem('rows'))
-        || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*90) + 10),
+        && getItem(this.props.name + 'rows'))
+        || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*100)),
       inputs: (this.props.resume
-        && getItem('inputs'))
+        && getItem(this.props.name + 'inputs'))
         || Array.apply(null, Array(10)).map(() => Array.apply(null, Array(10)).map(() => 0)),
-      loadedFromStorage: (this.props.resume && getItem('cols')) && true
+      loadedFromStorage: (this.props.resume && getItem(this.props.name + 'cols')) && true
     };
-    setItem('cols', storage.cols);
-    setItem('rows', storage.rows);
+    setItem(this.props.name + 'cols', storage.cols);
+    setItem(this.props.name + 'rows', storage.rows);
     return storage;
   }
 
   setValue = (value, row, col) => {
     const {inputs} = this.state;
     inputs[row][col] = parseInt(value, 10);
-    setItem('inputs', inputs);
+    setItem(this.props.name + 'inputs', inputs);
     this.setState({
       inputs
     })
@@ -68,7 +68,7 @@ export default class Body extends Component {
                     color="textSecondary"
                     style={{display: "flex", alignItems: "center"}}
                   >
-                    {this.rows[rowindex]} + {this.cols[colindex]} =
+                    {this.props.renderOperands(this.rows[rowindex], this.cols[colindex])} =
                   </Typography>
                   <Input
                     type="number"
@@ -102,17 +102,18 @@ export default class Body extends Component {
                     color="textSecondary"
                     style={{display: "flex", alignItems: "center"}}
                   >
-                    {this.rows[rowindex]} + {this.cols[colindex]} =
+                    {this.props.renderOperands(this.rows[rowindex], this.cols[colindex])} =
                   </Typography>
-                  {this.state.inputs[rowindex][colindex] === this.rows[rowindex] + this.cols[colindex] && ++this.score &&
+                  {this.props.evaluate(this.state.inputs[rowindex][colindex], this.rows[rowindex], this.cols[colindex])
+                    && ++this.score &&
                     <Typography
                       variant="body1"
                       color="primary"
                     >{this.state.inputs[rowindex][colindex]}
                     </Typography>
                   }
-                  {this.state.inputs[rowindex][colindex] !== this.rows[rowindex] + this.cols[colindex] &&
-                    <Typography
+                  {!this.props.evaluate(this.state.inputs[rowindex][colindex], this.rows[rowindex], this.cols[colindex])
+                    && <Typography
                       variant="body1"
                       color="error"
                     >{this.state.inputs[rowindex][colindex]}
@@ -132,23 +133,18 @@ export default class Body extends Component {
       <Card style={{margin: "50px", flexGrow: "1"}}>
         <CardContent>
           <Table >
-            {/* <TableHead>
-              <TableRow>
-                <TableCell key={0}></TableCell>
-                {this.cols.map((col, index) => {
-                  return (
-                    <TableCell key={index}></TableCell>
-                  );
-                })}
-              </TableRow>
-            </TableHead> */}
             <TableBody>
               {!this.state.evaluate && this.takeInput()}
               {this.state.evaluate && this.evaluate()}
             </TableBody>
           </Table>
             <CardActions>
-              <Timer loadFromStorage={this.loadedFromStorage} stop={this.state.evaluate} style={{paddingLeft: "24px"}}/>
+                <Timer
+                    name={this.props.name}
+                    loadFromStorage={this.loadedFromStorage}
+                    stop={this.state.evaluate}
+                    style={{paddingLeft: "24px"}}
+                />
               {this.state.evaluate &&
                 <div style={{marginLeft: "auto"}}>
                   <Typography
@@ -161,9 +157,9 @@ export default class Body extends Component {
               }
               <Button
                 onClick={() => {
-                  removeItem('inputs');
-                  removeItem('cols');
-                  removeItem('rows');
+                  removeItem(this.props.name + 'inputs');
+                  removeItem(this.props.name + 'cols');
+                  removeItem(this.props.name + 'rows');
                   window.location.reload()
                 }}
                 style={{marginLeft: "auto"}}
@@ -175,9 +171,9 @@ export default class Body extends Component {
               <Button
                   onClick={() => {
                     this.score = 0;
-                    removeItem('inputs');
-                    removeItem('cols');
-                    removeItem('rows');
+                    removeItem(this.props.name + 'inputs');
+                    removeItem(this.props.name + 'cols');
+                    removeItem(this.props.name + 'rows');
                     this.setState({evaluate: true})
                   }}
                   color="primary"
