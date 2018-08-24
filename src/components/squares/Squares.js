@@ -58,7 +58,7 @@ class Squares extends Component {
   render30Squares = () => {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
-        {getItem('squares30cols') && !this.state.started &&
+        {getItem('squares30data') && !this.state.started &&
           <Button
             onClick={() => this.setState({started: true, resume: true})}
             style={{margin: "auto", width: "50%", marginTop: "50px"}}
@@ -97,7 +97,7 @@ class Squares extends Component {
   render100Squares = () => {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
-        {getItem('squares100cols') && !this.state.started &&
+        {getItem('squares100data') && !this.state.started &&
           <Button
             onClick={() => this.setState({started: true, resume: true})}
             style={{margin: "auto", width: "50%", marginTop: "50px"}}

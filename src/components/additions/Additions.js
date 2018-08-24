@@ -33,7 +33,7 @@ export default class Additions extends Component {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
         {this.renderRules()}
-        {getItem('additionscols') && !this.state.started &&
+        {getItem('additionsdata') && !this.state.started &&
         <Button
           onClick={() => this.setState({started: true, resume: true})}
           style={{margin: "auto", width: "50%", marginTop: "50px"}}

@@ -33,7 +33,7 @@ export default class Subtraction extends Component {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
         {this.renderRules()}
-        {getItem('subtractioncols') && !this.state.started &&
+        {getItem('subtractiondata') && !this.state.started &&
           <Button
             onClick={() => this.setState({started: true, resume: true})}
             style={{margin: "auto", width: "50%", marginTop: "50px"}}

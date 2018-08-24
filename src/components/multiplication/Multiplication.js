@@ -33,7 +33,7 @@ export default class Multiplication extends Component {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
         {this.renderRules()}
-        {getItem('multiplicationcols') && !this.state.started &&
+        {getItem('multiplicationdata') && !this.state.started &&
           <Button
             onClick={() => this.setState({started: true, resume: true})}
             style={{margin: "auto", width: "50%", marginTop: "50px"}}
