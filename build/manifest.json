@@ -1,9 +1,9 @@
 {
-  "short_name": "Additions",
-  "name": "Additions cat preparation app",
+  "short_name": "Arithmetics",
+  "name": "Arithmetics improvement app",
   "icons": [
     {
-      "src": "https://garvit.in/favicon.ico",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
