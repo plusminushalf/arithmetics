@@ -34,7 +34,7 @@ function Header(props) {
           Arithmetics
         </Typography>
         <IconButton
-          onClick={() => window.open("https://github.com/garvitdelhi/cat-additions", "_blank")}
+          onClick={() => window.open("https://github.com/garvitdelhi/arithmetics", "_blank")}
           color="inherit"
           aria-label="Menu">
           <GithubIcon />
