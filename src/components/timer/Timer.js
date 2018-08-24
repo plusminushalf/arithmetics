@@ -18,6 +18,10 @@ export default class Timer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   tick = () => {
     let {sec, min} = this.state;
     sec++;

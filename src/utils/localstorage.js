@@ -10,18 +10,30 @@ const hasStorage = (function() {
 
 export function setItem(key, value) {
   if (hasStorage) {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (exception) {
+      // pass
+    }
   }
 }
 
 export function removeItem(key) {
   if (hasStorage) {
-    localStorage.removeItem(key);
+    try {
+      localStorage.removeItem(key);
+    } catch (exception) {
+      // pass
+    }
   }
 }
 
 export function getItem(key) {
   if (hasStorage) {
-    return JSON.parse(localStorage.getItem(key));
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (exception) {
+      return {};
+    }
   }
 }

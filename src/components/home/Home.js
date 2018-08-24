@@ -33,6 +33,14 @@ function Home(props) {
         size="small">
         Multiplication
       </Button>
+      <Button
+        onClick={() => props.history.push(`${ROOT_PATH}/squares`)}
+        style={{margin: "5px", flexGrow: "1"}}
+        color="secondary"
+        variant="contained"
+        size="small">
+        squares
+      </Button>
       {/*<Button
         onClick={() => props.history.push('/division')}
         style={{margin: "5px", flexGrow: "1"}}

@@ -21,7 +21,7 @@ function Header(props) {
     <AppBar position="static" color="primary">
       <Toolbar>
         {props.location.pathname !== ROOT_PATH && props.location.pathname !== `${ROOT_PATH}/` &&
-          <IconButton color="inherit" aria-label="Back" onClick={() => props.history.push(ROOT_PATH) } >
+          <IconButton color="inherit" aria-label="Back" onClick={() => props.history.goBack() } >
             <ArrowBack />
           </IconButton>
         }

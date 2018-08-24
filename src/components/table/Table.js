@@ -18,8 +18,7 @@ export default class Body extends Component {
   constructor(props) {
     super(props);
     const storage = this.loadFromStorage();
-    this.cols = storage.cols;
-    this.rows = storage.rows;
+    this.data = storage.data;
     this.score = 0;
     this.loadedFromStorage = storage.loadedFromStorage;
     this.state = {
@@ -30,19 +29,25 @@ export default class Body extends Component {
 
   loadFromStorage = () => {
     const storage = {
-      cols: (this.props.resume
-        && getItem(this.props.name + 'cols'))
-      || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*100)),
-      rows: (this.props.resume
-        && getItem(this.props.name + 'rows'))
-      || Array.apply(null, Array(10)).map(() => Math.ceil(Math.random()*100)),
       inputs: (this.props.resume
         && getItem(this.props.name + 'inputs'))
-      || Array.apply(null, Array(10)).map(() => Array.apply(null, Array(10)).map(() => 0)),
-      loadedFromStorage: (this.props.resume && getItem(this.props.name + 'cols')) && true
+        || Array.apply(null, Array(this.props.numberOfRows)).map(() => {
+          return Array.apply(null, Array(this.props.numberOfCols)).map(() => 0)
+        }),
+      data: (this.props.resume
+        && getItem(this.props.name + 'data'))
+        || Array.apply(null, Array(this.props.numberOfRows)).map(() => {
+          return Array.apply(null, Array(this.props.numberOfCols)).map(() => {
+            const data = this.props.generateCell();
+            return {
+              row: data[0],
+              col: data[1]
+            }
+          })
+        }),
+      loadedFromStorage: (this.props.resume && getItem(this.props.name + 'data')) && true
     };
-    setItem(this.props.name + 'cols', storage.cols);
-    setItem(this.props.name + 'rows', storage.rows);
+    setItem(this.props.name + 'data', storage.data);
     return storage;
   }
 
@@ -56,10 +61,10 @@ export default class Body extends Component {
   }
 
   takeInput() {
-    return this.rows.map((row, rowindex) => {
+    return this.data.map((row, rowindex) => {
       return (
         <TableRow key={rowindex}>
-          {Array.apply(null, Array(10)).map((ele, colindex) => {
+          {this.data[rowindex].map((col, colindex) => {
           return (
           <TableCell key={colindex} style={{padding: "5px"}}>
             <div className={style.cell}>
@@ -68,7 +73,7 @@ export default class Body extends Component {
                 color="textSecondary"
                 style={{display: "flex", alignItems: "center"}}
               >
-                {this.props.renderOperands(this.rows[rowindex], this.cols[colindex])} =
+                {this.props.renderOperands(this.data[rowindex][colindex].row, this.data[rowindex][colindex].col)} =
               </Typography>
               <Input
                 type="number"
@@ -90,10 +95,10 @@ export default class Body extends Component {
 }
 
 evaluate() {
-  return this.rows.map((row, rowindex) => {
+  return this.data.map((row, rowindex) => {
     return (
       <TableRow key={rowindex}>
-        {Array.apply(null, Array(10)).map((ele, colindex) => {
+        {this.data[rowindex].map((col, colindex) => {
         return (
         <TableCell key={colindex}>
           <div className={style.cell}>
@@ -102,22 +107,30 @@ evaluate() {
               color="textSecondary"
               style={{display: "flex", alignItems: "center"}}
             >
-              {this.props.renderOperands(this.rows[rowindex], this.cols[colindex])} =
+              {this.props.renderOperands(this.data[rowindex][colindex].row, this.data[rowindex][colindex].col)} =
             </Typography>
-            {this.props.evaluate(this.state.inputs[rowindex][colindex], this.rows[rowindex], this.cols[colindex])
-            && ++this.score &&
-            <Typography
-              variant="body1"
-              color="primary"
-            >{this.state.inputs[rowindex][colindex]}
-            </Typography>
+            {this.props.evaluate(
+              this.state.inputs[rowindex][colindex],
+              this.data[rowindex][colindex].row,
+              this.data[rowindex][colindex].col
+            )
+              && ++this.score &&
+              <Typography
+                variant="body1"
+                color="primary"
+              >{this.state.inputs[rowindex][colindex]}
+              </Typography>
             }
-            {!this.props.evaluate(this.state.inputs[rowindex][colindex], this.rows[rowindex], this.cols[colindex])
-            && <Typography
-              variant="body1"
-              color="error"
-            >{this.state.inputs[rowindex][colindex]}
-            </Typography>
+            {!this.props.evaluate(
+              this.state.inputs[rowindex][colindex],
+              this.data[rowindex][colindex].row,
+              this.data[rowindex][colindex].col
+            )
+              && <Typography
+                variant="body1"
+                color="error"
+              >{this.state.inputs[rowindex][colindex]}
+              </Typography>
             }
           </div>
         </TableCell>
@@ -150,14 +163,13 @@ render() {
               color="inherit"
               style={{marginLeft: "auto"}}
             >
-              Score: {this.score} / 100
+              Score: {this.score} / {this.data.length * this.data[0].length}
             </Typography>
           }
           <Button
             onClick={() => {
             removeItem(this.props.name + 'inputs');
-            removeItem(this.props.name + 'cols');
-            removeItem(this.props.name + 'rows');
+            removeItem(this.props.name + 'data');
             window.location.reload()
             }}
             style={{marginLeft: "auto"}}
@@ -170,8 +182,7 @@ render() {
             onClick={() => {
             this.score = 0;
             removeItem(this.props.name + 'inputs');
-            removeItem(this.props.name + 'cols');
-            removeItem(this.props.name + 'rows');
+            removeItem(this.props.name + 'data');
             this.setState({evaluate: true})
             }}
             color="primary"
@@ -184,5 +195,14 @@ render() {
       </CardContent>
     </Card>
     );
+  }
+}
+
+Body.defaultProps = {
+  numberOfRows: 10,
+  numberOfCols: 10,
+  resume: false,
+  generateCell: () => {
+    return [Math.ceil(Math.random()*100), Math.ceil(Math.random()*100)];
   }
 }
