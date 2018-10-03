@@ -7,9 +7,6 @@ import Medium from './Medium';
 import Difficult from './Difficult';
 
 export default class Additions extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   renderLevelsOptions = () => {
     return ["Easy", "Medium", "Difficult"].map((leveltext, level) => {
