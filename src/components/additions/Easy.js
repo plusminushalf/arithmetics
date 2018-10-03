@@ -21,7 +21,7 @@ export default class Easy extends Component {
         <List>
           <ListItem>
             <ListItemText>
-              Additions
+              Easy Additions
             </ListItemText>
           </ListItem>
         </List>
@@ -34,7 +34,7 @@ export default class Easy extends Component {
       <div style={{display: "flex", flexDirection: "column"}}>
         {this.renderRules()}
 
-        {getItem('additionsdata') && !this.state.started &&
+        {getItem('additions0data') && !this.state.started &&
         <Button
           onClick={() => this.setState({started: true, resume: true})}
           style={{margin: "auto", width: "50%", marginTop: "50px"}}
@@ -55,7 +55,7 @@ export default class Easy extends Component {
         {this.state.started &&
         <Table
           evaluate={(result, first, second) => result === first + second}
-          name="additions"
+          name="additions0"
           resume={this.state.resume}
           renderOperands={(first, second) => `${first} + ${second}`}
           generateCell={() => {return [Math.ceil(Math.random()*10), Math.ceil(Math.random()*10)];}}
