@@ -178,7 +178,7 @@ render() {
             size="small">
             Reload
           </Button>
-          <Button
+          {!this.state.evaluate && <Button
             onClick={() => {
             this.score = 0;
             removeItem(this.props.name + 'inputs');
@@ -190,7 +190,7 @@ render() {
             size="small"
           >
             Submit
-          </Button>
+          </Button>}
         </CardActions>
       </CardContent>
     </Card>
