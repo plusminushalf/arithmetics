@@ -80,11 +80,11 @@ class Squares extends Component {
         <Table
           evaluate={(result, first, second) => result === first * second}
           numberOfRows={10}
-          numberOfCols={3}
+          numberOfCols={5}
           name="squares30"
           resume={this.state.resume}
           generateCell={() => {
-            const number = Math.ceil(Math.random()*30) + 2;
+            const number = Math.ceil(Math.random()*30);
             return [number, number];
           }}
           renderOperands={(first, second) => `${first} * ${second}`}
